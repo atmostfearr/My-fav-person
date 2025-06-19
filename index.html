@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Little Book</title>
+
+  <!-- Google Font: Poppins (sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ===== Base reset & box-sizing ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      background-color: #fed2e0;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+    /* ===== Floating love ornament styles ===== */
+    .ornament {
+      position: fixed;
+      font-size: 1.5em;
+      pointer-events: none;
+      opacity: 0.8;
+      animation: floatUp 6s linear forwards;
+      z-index: 10;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-20vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+    /* ===== Sections & page-container ===== */
+    section {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px 0;
+    }
+    .page-container {
+      background-color: #fff;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .page-container.visible {
+      opacity: 1;
+    }
+    /* ===== Quote styling ===== */
+    .quote {
+      font-size: 1.2em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      overflow-wrap: break-word;
+    }
+    /* ===== Hidden message styling ===== */
+    .hidden-message {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #fff0f5;
+      border-left: 4px solid #d48097;
+      border-radius: 4px;
+      font-size: 1em;
+      color: #4a2f36;
+      text-align: left;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      max-width: 100%;
+    }
+    /* ===== Buttons ===== */
+    .btn {
+      background-color: #fff;
+      color: #4a2f36;
+      border: 2px solid #d48097;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      margin: 6px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      background-color: #d48097;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    /* ===== Scroll indicator ===== */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 15px;
+      font-size: 1.5em;
+      color: #4a2f36;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
+    }
+    /* ===== Cinematic door overlays ===== */
+    .door {
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      width: 50vw;
+      background-color: #d48097; /* door color matching accent */
+      z-index: 1000;
+      transition: transform 1s ease-in-out;
+    }
+    .door.left {
+      left: 0;
+      transform: translateX(0);
+    }
+    .door.right {
+      right: 0;
+      transform: translateX(0);
+    }
+    .door.open.left {
+      transform: translateX(-100%);
+    }
+    .door.open.right {
+      transform: translateX(100%);
+    }
+    /* ===== Text animation: words fadeInUp ===== */
+    .animate-text span {
+      opacity: 0;
+      display: inline-block;
+      transform: translateY(10px);
+      animation: fadeInUp 0.5s forwards;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* ===== Responsive tweaks ===== */
+    @media (max-width: 500px) {
+      .page-container {
+        padding: 20px 15px 50px;
+      }
+      .quote {
+        font-size: 1em;
+      }
+      .btn {
+        font-size: 0.9em;
+        padding: 6px 12px;
+      }
+      .scroll-indicator {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Page 1 -->
+  <section id="page1">
+    <div class="page-container visible" id="container1">
+      <div class="quote animate-text" data-text="Morning!!! Onyelll🐾😚"></div>
+      <button class="btn" id="startBtn">Click Me</button>
+    </div>
+  </section>
+
+  <!-- Page 2 -->
+  <section id="page2">
+    <div class="page-container" id="container2">
+      <div class="quote animate-text" data-text="“Dear my fav person”"></div>
+      <button class="btn" id="reveal2Btn">Reveal Hidden Message</button>
+      <div class="hidden-message" id="hidden2">Hidden: is it too late now to say sorry? </div>
+      <!-- scroll indicator to page3 -->
+      <div class="scroll-indicator" data-target="page3">↓ Scroll</div>
+    </div>
+  </section>
+
+  <!-- Page 3 -->
+  <section id="page3">
+    <div class="page-container" id="container3">
+      <div class="quote animate-text" data-text="“And... Uhm... Can i bite your biceps? ”"></div>
+      <button class="btn revealBtn">Reveal Hidden Message</button>
+      <div class="hidden-message">Hidden: Im not a romantic person sorry</div>
+      <!-- scroll indicator to page4 -->
+      <div class="scroll-indicator" data-target="page4">↓ Scroll</div>
+    </div>
+  </section>
+
+  <!-- Page 4 -->
+  <section id="page4">
+    <div class="page-container" id="container4">
+      <div class="quote animate-text" data-text="“I think i wanna make a waffle every morning with you ”"></div>
+      <button class="btn revealBtn">Reveal Hidden Message</button>
+      <div class="hidden-message">Hidden: Cause my favorite plot twist was meeting you.</div>
+      <!-- scroll indicator to page5 -->
+      <div class="scroll-indicator" data-target="page5">↓ Scroll</div>
+    </div>
+  </section>
+
+  <!-- Page 5 -->
+  <section id="page5">
+    <div class="page-container" id="container5">
+      <div class="quote animate-text" data-text="“Thankyou for being exist”"></div>
+      <button class="btn revealBtn">Reveal Hidden Message</button>
+      <div class="hidden-message">Hidden: Screenshot this to claim a photo from me🤫</div>
+      <!-- The End -->
+      <div style="margin-top: 20px; font-size: 1em; color: #666;">a ride?  </div>
+    </div>
+  </section>
+
+  <script>
+    // ===== Utility: animateTextOnce splits data-text into spans =====
+    function animateTextOnce(element) {
+      if (!element) return;
+      // Only animate once per element
+      if (element.dataset.animated) return;
+      const text = element.getAttribute('data-text') || element.textContent;
+      element.textContent = '';
+      const words = text.split(' ');
+      words.forEach((word, wIdx) => {
+        const span = document.createElement('span');
+        span.textContent = word + (wIdx < words.length - 1 ? '\u00A0' : '');
+        const delay = (wIdx * 0.1).toFixed(2) + 's';
+        span.style.animationDelay = delay;
+        element.appendChild(span);
+      });
+      element.dataset.animated = 'true';
+    }
+
+    // ===== Page 1 text animation on load & start ornaments =====
+    document.addEventListener('DOMContentLoaded', () => {
+      const el1 = document.querySelector('#container1 .animate-text');
+      animateTextOnce(el1);
+      startOrnaments();
+    });
+
+    // ===== Cinematic door transition from Page 1 to Page 2 =====
+    document.getElementById('startBtn').addEventListener('click', () => {
+      // Optionally lock scroll until transition done
+      document.body.style.overflow = 'hidden';
+      // Create door overlays
+      const leftDoor = document.createElement('div');
+      leftDoor.classList.add('door', 'left');
+      const rightDoor = document.createElement('div');
+      rightDoor.classList.add('door', 'right');
+      document.body.appendChild(leftDoor);
+      document.body.appendChild(rightDoor);
+
+      // Scroll instantly to page2 so it's behind doors
+      const page2 = document.getElementById('page2');
+      page2.scrollIntoView({behavior: 'auto'});
+
+      // Animate doors open
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          leftDoor.classList.add('open');
+          rightDoor.classList.add('open');
+        }, 50);
+      });
+
+      // After transition (~1s), remove doors, reveal page2, animate text, unlock scroll
+      setTimeout(() => {
+        leftDoor.remove();
+        rightDoor.remove();
+        const cont2 = document.getElementById('container2');
+        cont2.classList.add('visible');
+        animateTextOnce(cont2.querySelector('.animate-text'));
+        document.body.style.overflow = '';
+      }, 1100);
+    });
+
+    // ===== Page 2 hidden message toggle =====
+    document.getElementById('reveal2Btn').addEventListener('click', () => {
+      const hidden = document.getElementById('hidden2');
+      if (hidden.style.display === 'block') {
+        hidden.style.display = 'none';
+      } else {
+        hidden.style.display = 'block';
+      }
+    });
+
+    // ===== Scroll indicator click handlers =====
+    document.querySelectorAll('.scroll-indicator').forEach(ind => {
+      ind.addEventListener('click', () => {
+        const targetId = ind.dataset.target;
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({behavior: 'smooth'});
+        }
+      });
+    });
+
+    // ===== Pages 3–5: reveal on scroll =====
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const cont = entry.target;
+          if (!cont.classList.contains('visible')) {
+            cont.classList.add('visible');
+            const el = cont.querySelector('.animate-text');
+            animateTextOnce(el);
+          }
+        }
+      });
+    }, options);
+    // Observe containers 3–5
+    ['container3','container4','container5'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    // ===== Pages 3–5 hidden message toggles =====
+    document.querySelectorAll('#page3 .revealBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const hidden = btn.nextElementSibling;
+        if (!hidden) return;
+        hidden.style.display = (hidden.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+    document.querySelectorAll('#page4 .revealBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const hidden = btn.nextElementSibling;
+        if (!hidden) return;
+        hidden.style.display = (hidden.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+    document.querySelectorAll('#page5 .revealBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const hidden = btn.nextElementSibling;
+        if (!hidden) return;
+        hidden.style.display = (hidden.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+
+    // ===== Floating love ornaments =====
+    function startOrnaments() {
+      const symbols = ['❤️'];
+      setInterval(() => {
+        const ornament = document.createElement('div');
+        ornament.className = 'ornament';
+        ornament.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        // random horizontal start 5%–95%
+        ornament.style.left = (5 + Math.random() * 90) + 'vw';
+        // random animation duration 5–8s
+        const dur = 5 + Math.random() * 3;
+        ornament.style.animationDuration = dur + 's';
+        document.body.appendChild(ornament);
+        // remove after animation ends
+        setTimeout(() => {
+          ornament.remove();
+        }, dur * 1000 + 200);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
